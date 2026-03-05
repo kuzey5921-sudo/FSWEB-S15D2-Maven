@@ -2,7 +2,6 @@ package org.example.entity;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 public class TaskData {
     private Set<Task> annsTasks;
@@ -27,25 +26,28 @@ public class TaskData {
         };
     }
 
+    // ✅ UNION
     public Set<Task> getUnion(Set<Task> set1, Set<Task> set2) {
         Set<Task> union = new HashSet<>(set1);
         union.addAll(set2);
         return union;
     }
 
+    // ✅ INTERSECT (kesişim)
     public Set<Task> getIntersect(Set<Task> set1, Set<Task> set2) {
         Set<Task> intersect = new HashSet<>(set1);
         intersect.retainAll(set2);
         return intersect;
     }
 
+    // ✅ DIFFERENCE (set1 - set2)
     public Set<Task> getDifference(Set<Task> set1, Set<Task> set2) {
         Set<Task> difference = new HashSet<>(set1);
         difference.removeAll(set2);
         return difference;
     }
 
-    // Müdüre cevap verebilmek için yardımcı metodlar
+    // --- yardımcılar (senin dosyada var, kalsın) ---
     public Set<Task> getAllTasks() {
         return getTasks("all");
     }
@@ -60,22 +62,18 @@ public class TaskData {
 
     public Set<Task> getDuplicateTasks() {
         Set<Task> duplicates = new HashSet<>();
-
-        // Ann ve Bob arasındaki kesişim
         duplicates.addAll(getIntersect(annsTasks, bobsTasks));
-        // Ann ve Carol arasındaki kesişim
         duplicates.addAll(getIntersect(annsTasks, carolsTasks));
-        // Bob ve Carol arasındaki kesişim
         duplicates.addAll(getIntersect(bobsTasks, carolsTasks));
-
         return duplicates;
     }
 
+    // ✅ TESTİN İSTEDİĞİ İSİMLER (stub değil!)
     public Set<Task> getIntersection(Set<Task> taskSet, Set<Task> taskSet2) {
-        return taskSet;
+        return getIntersect(taskSet, taskSet2);
     }
 
     public Set<Task> getDifferences(Set<Task> taskSet, Set<Task> taskSet2) {
-        return taskSet;
+        return getDifference(taskSet, taskSet2);
     }
 }
